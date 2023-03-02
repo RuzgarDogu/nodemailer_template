@@ -1,603 +1,1283 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Simple Transactional Email</title>
-    <style>
-      /* -------------------------------------
-          GLOBAL RESETS
-      ------------------------------------- */
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+    <head>
+    	<!-- NAME: TICKET -->
+        <!--[if gte mso 15]>
+		<xml>
+			<o:OfficeDocumentSettings>
+			<o:AllowPNG/>
+			<o:PixelsPerInch>96</o:PixelsPerInch>
+			</o:OfficeDocumentSettings>
+		</xml>
+		<![endif]-->
+		<meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>{{mailtitle}}</title>
+     
+    
 
-      /*All the styling goes here*/
+    <style type="text/css">
+      p{
+        margin:10px 0;
+        padding:0;
+      }
+      table{
+        border-collapse:collapse;
+      }
+      h1,h2,h3,h4,h5,h6{
+        display:block;
+        margin:0;
+        padding:0;
+      }
+      img,a img{
+        border:0;
+        height:auto;
+        outline:none;
+        text-decoration:none;
+      }
+      body,#bodyTable,#bodyCell{
+        height:100%;
+        margin:0;
+        padding:0;
+        width:100%;
+      }
+      .mcnPreviewText{
+        display:none !important;
+      }
+      #outlook a{
+        padding:0;
+      }
+      img{
+        -ms-interpolation-mode:bicubic;
+      }
+      table{
+        mso-table-lspace:0pt;
+        mso-table-rspace:0pt;
+      }
+      .ReadMsgBody{
+        width:100%;
+      }
+      .ExternalClass{
+        width:100%;
+      }
+      p,a,li,td,blockquote{
+        mso-line-height-rule:exactly;
+      }
+      a[href^=tel],a[href^=sms]{
+        color:inherit;
+        cursor:default;
+        text-decoration:none;
+      }
+      p,a,li,td,body,table,blockquote{
+        -ms-text-size-adjust:100%;
+        -webkit-text-size-adjust:100%;
+      }
+      .ExternalClass,.ExternalClass p,.ExternalClass td,.ExternalClass div,.ExternalClass span,.ExternalClass font{
+        line-height:100%;
+      }
+      a[x-apple-data-detectors]{
+        color:inherit !important;
+        text-decoration:none !important;
+        font-size:inherit !important;
+        font-family:inherit !important;
+        font-weight:inherit !important;
+        line-height:inherit !important;
+      }
+      a.mcnButton{
+        display:block;
+      }
+      .mcnImage,.mcnRetinaImage{
+        vertical-align:bottom;
+      }
+      .mcnTextContent{
+        word-break:break-word;
+      }
+      .mcnTextContent img{
+        height:auto !important;
+      }
+      .mcnDividerBlock{
+        table-layout:fixed !important;
+      }
+    /*
+    @tab Page
+    @section background style
+    @tip Set the background color and top border for your email. You may want to choose colors that match your company's branding.
+    */
+      body,#bodyTable,#templateFooter{
+        /*@editable*/background-color:#FDB813;
+      }
+    /*
+    @tab Page
+    @section background style
+    @tip Set the background color and top border for your email. You may want to choose colors that match your company's branding.
+    */
+      #bodyCell{
+        /*@editable*/border-top:0;
+      }
+    /*
+    @tab Page
+    @section heading 1
+    @tip Set the styling for all first-level headings in your emails. These should be the largest of your headings.
+    @style heading 1
+    */
+      h1{
+        /*@editable*/color:#212223 !important;
+        /*@editable*/font-family:Georgia, Times, 'Times New Roman', serif;
+        /*@editable*/font-size:40px;
+        /*@editable*/font-style:normal;
+        /*@editable*/font-weight:normal;
+        /*@editable*/line-height:125%;
+        /*@editable*/letter-spacing:-1px;
+        /*@editable*/text-align:left;
+      }
+    /*
+    @tab Page
+    @section heading 2
+    @tip Set the styling for all second-level headings in your emails.
+    @style heading 2
+    */
+      h2{
+        /*@editable*/color:#212223 !important;
+        /*@editable*/font-family:Georgia;
+        /*@editable*/font-size:26px;
+        /*@editable*/font-style:normal;
+        /*@editable*/font-weight:normal;
+        /*@editable*/line-height:125%;
+        /*@editable*/letter-spacing:-.75px;
+        /*@editable*/text-align:left;
+      }
+    /*
+    @tab Page
+    @section heading 3
+    @tip Set the styling for all third-level headings in your emails.
+    @style heading 3
+    */
+      h3{
+        /*@editable*/color:#212223 !important;
+        /*@editable*/font-family:Georgia;
+        /*@editable*/font-size:18px;
+        /*@editable*/font-style:normal;
+        /*@editable*/font-weight:normal;
+        /*@editable*/line-height:125%;
+        /*@editable*/letter-spacing:-.5px;
+        /*@editable*/text-align:left;
+      }
+    /*
+    @tab Page
+    @section heading 4
+    @tip Set the styling for all fourth-level headings in your emails. These should be the smallest of your headings.
+    @style heading 4
+    */
+      h4{
+        /*@editable*/color:#212223 !important;
+        /*@editable*/font-family:Georgia;
+        /*@editable*/font-size:16px;
+        /*@editable*/font-style:normal;
+        /*@editable*/font-weight:normal;
+        /*@editable*/line-height:125%;
+        /*@editable*/letter-spacing:normal;
+        /*@editable*/text-align:left;
+      }
+    /*
+    @tab Preheader
+    @section preheader style
+    @tip Set the background color and borders for your email's preheader area.
+    */
+      #templatePreheader{
+        /*@editable*/background-color:#212223;
+        /*@editable*/border-top:0;
+        /*@editable*/border-bottom:0;
+      }
+    /*
+    @tab Preheader
+    @section preheader text
+    @tip Set the styling for your email's preheader text. Choose a size and color that is easy to read.
+    */
+      .preheaderContainer .mcnTextContent,.preheaderContainer .mcnTextContent p{
+        /*@editable*/color:#FFFFFF;
+        /*@editable*/font-family:Helvetica;
+        /*@editable*/font-size:10px;
+        /*@editable*/line-height:125%;
+        /*@editable*/text-align:left;
+      }
+    /*
+    @tab Preheader
+    @section preheader link
+    @tip Set the styling for your email's header links. Choose a color that helps them stand out from your text.
+    */
+      .preheaderContainer .mcnTextContent a{
+        /*@editable*/color:#FFFFFF;
+        /*@editable*/font-weight:normal;
+        /*@editable*/text-decoration:underline;
+      }
+    /*
+    @tab Header
+    @section header style
+    @tip Set the background color and borders for your email's header area.
+    */
+      #templateHeader{
+        /*@editable*/background-color:#FDB813;
+        /*@editable*/border-top:0;
+        /*@editable*/border-bottom:0;
+      }
+    /*
+    @tab Header
+    @section header text
+    @tip Set the styling for your email's header text. Choose a size and color that is easy to read.
+    */
+      .headerContainer .mcnTextContent,.headerContainer .mcnTextContent p{
+        /*@editable*/color:#FFFFFF;
+        /*@editable*/font-family:Helvetica;
+        /*@editable*/font-size:16px;
+        /*@editable*/line-height:150%;
+        /*@editable*/text-align:left;
+      }
+    /*
+    @tab Header
+    @section header link
+    @tip Set the styling for your email's header links. Choose a color that helps them stand out from your text.
+    */
+      .headerContainer .mcnTextContent a{
+        /*@editable*/color:#FFFFFF;
+        /*@editable*/font-weight:normal;
+        /*@editable*/text-decoration:underline;
+      }
+    /*
+    @tab Columns
+    @section column style
+    @tip Set the background color and borders for your email's columns area.
+    */
+      #templateColumns{
+        /*@editable*/background-color:#ffffff;
+        /*@editable*/border-top:15px solid #ffffff;
+        /*@editable*/border-bottom:0;
+      }
+    /*
+    @tab Columns
+    @section left column text
+    @tip Set the styling for your email's left column text. Choose a size and color that is easy to read.
+    */
+      .leftColumnContainer .mcnTextContent,.leftColumnContainer .mcnTextContent p{
+        /*@editable*/color:#212223;
+        /*@editable*/font-family:Helvetica;
+        /*@editable*/font-size:16px;
+        /*@editable*/line-height:150%;
+        /*@editable*/text-align:left;
+      }
+    /*
+    @tab Columns
+    @section left column link
+    @tip Set the styling for your email's left column links. Choose a color that helps them stand out from your text.
+    */
+      .leftColumnContainer .mcnTextContent a{
+        /*@editable*/color:#541900;
+        /*@editable*/font-weight:normal;
+        /*@editable*/text-decoration:underline;
+      }
+    /*
+    @tab Columns
+    @section right column text
+    @tip Set the styling for your email's right column text. Choose a size and color that is easy to read.
+    */
+      .rightColumnContainer .mcnTextContent,.rightColumnContainer .mcnTextContent p{
+        /*@editable*/color:#212223;
+        /*@editable*/font-family:Helvetica;
+        /*@editable*/font-size:16px;
+        /*@editable*/line-height:150%;
+        /*@editable*/text-align:left;
+      }
+    /*
+    @tab Columns
+    @section right column link
+    @tip Set the styling for your email's right column links. Choose a color that helps them stand out from your text.
+    */
+      .rightColumnContainer .mcnTextContent a{
+        /*@editable*/color:#541900;
+        /*@editable*/font-weight:normal;
+        /*@editable*/text-decoration:underline;
+      }
+    /*
+    @tab Body
+    @section body style
+    @tip Set the background color and borders for your email's body area.
+    */
+      #templateBody,.backgroundColor{
+        /*@editable*/background-color:#FDB813;
+      }
+    /*
+    @tab Body
+    @section body style
+    @tip Set the background color and borders for your email's body area.
+    */
+      #templateBody{
+        /*@editable*/border-top:15px none #ffd249;
+        /*@editable*/border-bottom:0;
+      }
+    /*
+    @tab Body
+    @section body container
+    @tip Set the background color for your email's body container.
+    */
+      #bodyBackground{
+        /*@editable*/background-color:#FFFFFF;
+      }
+    /*
+    @tab Body
+    @section body text
+    @tip Set the styling for your email's body text. Choose a size and color that is easy to read.
+    */
+      .bodyContainer .mcnTextContent,.bodyContainer .mcnTextContent p{
+        /*@editable*/color:#212223;
+        /*@editable*/font-family:Helvetica;
+        /*@editable*/font-size:16px;
+        /*@editable*/line-height:150%;
+        /*@editable*/text-align:left;
+      }
+    /*
+    @tab Body
+    @section body link
+    @tip Set the styling for your email's body links. Choose a color that helps them stand out from your text.
+    */
+      .bodyContainer .mcnTextContent a{
+        /*@editable*/color:#541900;
+        /*@editable*/font-weight:normal;
+        /*@editable*/text-decoration:underline;
+      }
+    /*
+    @tab Footer
+    @section footer style
+    @tip Set the background color and borders for your email's footer area.
+    */
+      #templateFooter{
+        /*@editable*/border-top:0;
+        /*@editable*/border-bottom:0;
+      }
+    /*
+    @tab Footer
+    @section footer text
+    @tip Set the styling for your email's footer text. Choose a size and color that is easy to read.
+    */
+      .footerContainer .mcnTextContent,.footerContainer .mcnTextContent p{
+        /*@editable*/color:#212223;
+        /*@editable*/font-family:Helvetica;
+        /*@editable*/font-size:10px;
+        /*@editable*/line-height:125%;
+        /*@editable*/text-align:center;
+      }
+    /*
+    @tab Footer
+    @section footer link
+    @tip Set the styling for your email's footer links. Choose a color that helps them stand out from your text.
+    */
+      .footerContainer .mcnTextContent a{
+        /*@editable*/color:#212223;
+        /*@editable*/font-weight:normal;
+        /*@editable*/text-decoration:underline;
+      }
+    @media only screen and (max-width: 480px){
+      body,table,td,p,a,li,blockquote{
+        -webkit-text-size-adjust:none !important;
+      }
+  
+  }	@media only screen and (max-width: 480px){
+      body{
+        width:100% !important;
+        min-width:100% !important;
+      }
+  
+  }	@media only screen and (max-width: 480px){
+      .templateContainer{
+        max-width:600px !important;
+        width:100% !important;
+      }
+  
+  }	@media only screen and (max-width: 480px){
+      .columnsContainer{
+        display:block!important;
+        max-width:600px !important;
+        padding-bottom:18px !important;
+        padding-left:0 !important;
+        width:100%!important;
+      }
+  
+  }	@media only screen and (max-width: 480px){
+      .mcnRetinaImage{
+        max-width:100% !important;
+      }
+  
+  }	@media only screen and (max-width: 480px){
+      .mcnImage{
+        height:auto !important;
+        width:100% !important;
+      }
+  
+  }	@media only screen and (max-width: 480px){
+      .mcnCartContainer,.mcnCaptionTopContent,.mcnRecContentContainer,.mcnCaptionBottomContent,.mcnTextContentContainer,.mcnBoxedTextContentContainer,.mcnImageGroupContentContainer,.mcnCaptionLeftTextContentContainer,.mcnCaptionRightTextContentContainer,.mcnCaptionLeftImageContentContainer,.mcnCaptionRightImageContentContainer,.mcnImageCardLeftTextContentContainer,.mcnImageCardRightTextContentContainer,.mcnImageCardLeftImageContentContainer,.mcnImageCardRightImageContentContainer{
+        max-width:100% !important;
+        width:100% !important;
+      }
+  
+  }	@media only screen and (max-width: 480px){
+      .mcnBoxedTextContentContainer{
+        min-width:100% !important;
+      }
+  
+  }	@media only screen and (max-width: 480px){
+      .mcnImageGroupContent{
+        padding:9px !important;
+      }
+  
+  }	@media only screen and (max-width: 480px){
+      .mcnCaptionLeftContentOuter .mcnTextContent,.mcnCaptionRightContentOuter .mcnTextContent{
+        padding-top:9px !important;
+      }
+  
+  }	@media only screen and (max-width: 480px){
+      .mcnImageCardTopImageContent,.mcnCaptionBottomContent:last-child .mcnCaptionBottomImageContent,.mcnCaptionBlockInner .mcnCaptionTopContent:last-child .mcnTextContent{
+        padding-top:18px !important;
+      }
+  
+  }	@media only screen and (max-width: 480px){
+      .mcnImageCardBottomImageContent{
+        padding-bottom:9px !important;
+      }
+  
+  }	@media only screen and (max-width: 480px){
+      .mcnImageGroupBlockInner{
+        padding-top:0 !important;
+        padding-bottom:0 !important;
+      }
+  
+  }	@media only screen and (max-width: 480px){
+      .mcnImageGroupBlockOuter{
+        padding-top:9px !important;
+        padding-bottom:9px !important;
+      }
+  
+  }	@media only screen and (max-width: 480px){
+      .mcnTextContent,.mcnBoxedTextContentColumn{
+        padding-right:18px !important;
+        padding-left:18px !important;
+      }
+  
+  }	@media only screen and (max-width: 480px){
+      .mcnImageCardLeftImageContent,.mcnImageCardRightImageContent{
+        padding-right:18px !important;
+        padding-bottom:0 !important;
+        padding-left:18px !important;
+      }
+  
+  }	@media only screen and (max-width: 480px){
+      .mcpreview-image-uploader{
+        display:none !important;
+        width:100% !important;
+      }
+  
+  }	@media only screen and (max-width: 480px){
+    /*
+    @tab Mobile Styles
+    @section heading 1
+    @tip Make the first-level headings larger in size for better readability on small screens.
+    */
+      h1{
+        /*@editable*/font-size:24px !important;
+        /*@editable*/line-height:125% !important;
+      }
+  
+  }	@media only screen and (max-width: 480px){
+    /*
+    @tab Mobile Styles
+    @section heading 2
+    @tip Make the second-level headings larger in size for better readability on small screens.
+    */
+      h2{
+        /*@editable*/font-size:20px !important;
+        /*@editable*/line-height:125% !important;
+      }
+  
+  }	@media only screen and (max-width: 480px){
+    /*
+    @tab Mobile Styles
+    @section heading 3
+    @tip Make the third-level headings larger in size for better readability on small screens.
+    */
+      h3{
+        /*@editable*/font-size:18px !important;
+        /*@editable*/line-height:125% !important;
+      }
+  
+  }	@media only screen and (max-width: 480px){
+    /*
+    @tab Mobile Styles
+    @section heading 4
+    @tip Make the fourth-level headings larger in size for better readability on small screens.
+    */
+      h4{
+        /*@editable*/font-size:16px !important;
+        /*@editable*/line-height:125% !important;
+      }
+  
+  }	@media only screen and (max-width: 480px){
+    /*
+    @tab Mobile Styles
+    @section Boxed Text
+    @tip Make the boxed text larger in size for better readability on small screens. We recommend a font size of at least 16px.
+    */
+      .mcnBoxedTextContentContainer .mcnTextContent,.mcnBoxedTextContentContainer .mcnTextContent p{
+        /*@editable*/font-size:18px !important;
+        /*@editable*/line-height:125% !important;
+      }
+  
+  }	@media only screen and (max-width: 480px){
+    /*
+    @tab Mobile Styles
+    @section Preheader Visibility
+    @tip Set the visibility of the email's preheader on small screens. You can hide it to save space.
+    */
+      #templatePreheader{
+        /*@editable*/display:block !important;
+      }
+  
+  }	@media only screen and (max-width: 480px){
+    /*
+    @tab Mobile Styles
+    @section Preheader Text
+    @tip Make the preheader text larger in size for better readability on small screens.
+    */
+      .preheaderContainer .mcnTextContent,.preheaderContainer .mcnTextContent p{
+        /*@editable*/font-size:14px !important;
+        /*@editable*/line-height:115% !important;
+      }
+  
+  }	@media only screen and (max-width: 480px){
+    /*
+    @tab Mobile Styles
+    @section Header Text
+    @tip Make the header text larger in size for better readability on small screens.
+    */
+      .headerContainer .mcnTextContent,.headerContainer .mcnTextContent p{
+        /*@editable*/font-size:18px !important;
+        /*@editable*/line-height:125% !important;
+      }
+  
+  }	@media only screen and (max-width: 480px){
+    /*
+    @tab Mobile Styles
+    @section Body Text
+    @tip Make the body text larger in size for better readability on small screens. We recommend a font size of at least 16px.
+    */
+      .bodyContainer .mcnTextContent,.bodyContainer .mcnTextContent p{
+        /*@editable*/font-size:18px !important;
+        /*@editable*/line-height:125% !important;
+      }
+  
+  }	@media only screen and (max-width: 480px){
+    /*
+    @tab Mobile Styles
+    @section Left Column Text
+    @tip Make the left column text larger in size for better readability on small screens. We recommend a font size of at least 16px.
+    */
+      .leftColumnContainer .mcnTextContent,.leftColumnContainer .mcnTextContent p{
+        /*@editable*/font-size:18px !important;
+        /*@editable*/line-height:125% !important;
+      }
+  
+  }	@media only screen and (max-width: 480px){
+    /*
+    @tab Mobile Styles
+    @section Right Column Text
+    @tip Make the right column text larger in size for better readability on small screens. We recommend a font size of at least 16px.
+    */
+      .rightColumnContainer .mcnTextContent,.rightColumnContainer .mcnTextContent p{
+        /*@editable*/font-size:18px !important;
+        /*@editable*/line-height:125% !important;
+      }
+  
+  }	@media only screen and (max-width: 480px){
+    /*
+    @tab Mobile Styles
+    @section footer text
+    @tip Make the body content text larger in size for better readability on small screens.
+    */
+      .footerContainer .mcnTextContent,.footerContainer .mcnTextContent p{
+        /*@editable*/font-size:14px !important;
+        /*@editable*/line-height:115% !important;
+      }
+  
+  }</style>
 
-     @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
-
-      img {
-        border: none;
-        -ms-interpolation-mode: bicubic;
-        max-width: 100%;
-      }
-
-      body {
-        background-color: #ffffff;
-        font-family: 'Poppins', sans-serif;
-        -webkit-font-smoothing: antialiased;
-        font-size: 12px;
-        line-height: 1.4;
-        margin: 0;
-        padding: 0;
-        -ms-text-size-adjust: 100%;
-        -webkit-text-size-adjust: 100%;
-      }
-
-      table {
-        border-collapse: separate;
-        mso-table-lspace: 0pt;
-        mso-table-rspace: 0pt;
-        width: 100%;
-      }
-      table td {
-        font-family: 'Poppins', sans-serif;
-        font-size: 12px;
-      }
-
-      /* -------------------------------------
-          BODY & CONTAINER
-      ------------------------------------- */
-
-      .body {
-        background-color: #ffffff;
-        width: 100%;
-      }
-
-      /* Set a max-width, and make it display as block so it will automatically stretch to that width, but will also shrink down on a phone or something */
-      .container {
-        display: block;
-        margin: 0 auto !important;
-        /* makes it centered */
-        max-width: 580px;
-        padding: 10px;
-        width: 580px;
-      }
-
-      /* This should also be a block element, so that it will fill 100% of the .container */
-      .content {
-        box-sizing: border-box;
-        display: block;
-        margin: 0 auto;
-        max-width: 480px;
-        padding: 10px;
-      }
-
-      /* -------------------------------------
-          HEADER, FOOTER, MAIN
-      ------------------------------------- */
-      .main {
-        background: #fefefe;
-        border-radius: 15px;
-        border: dashed 1px #b7b7b7;
-        width: 100%;
-        overflow: hidden;
-        border-collapse: separate;
-      }
-
-      .wrapper {
-        box-sizing: border-box;
-        padding: 10px 20px;
-      }
-
-      .content-block {
-        padding-bottom: 10px;
-        padding-top: 10px;
-      }
-
-      .footer {
-        clear: both;
-        margin-top: 10px;
-        text-align: center;
-        width: 100%;
-      }
-      .footer td,
-      .footer p,
-      .footer span,
-      .footer a {
-        color: #999999;
-        font-size: 12px;
-        text-align: center;
-      }
-
-      /* -------------------------------------
-          TYPOGRAPHY
-      ------------------------------------- */
-      h1,
-      h2,
-      h3,
-      h4 {
-        color: #000000;
-        font-family: 'Poppins', sans-serif;
-        font-weight: 400;
-        line-height: 1.4;
-        margin: 0;
-        margin-bottom: 30px;
-      }
-
-      h1 {
-        font-size: 25px;
-        font-weight: 300;
-        text-align: center;
-        text-transform: capitalize;
-      }
-
-      p,
-      ul,
-      ol {
-        font-family: 'Poppins', sans-serif;
-        font-size: 12px;
-        font-weight: normal;
-        margin: 0;
-        margin-bottom: 15px;
-      }
-      p li,
-      ul li,
-      ol li {
-        list-style-position: inside;
-        margin-left: 5px;
-      }
-
-      a {
-        color: #3498db;
-        text-decoration: underline;
-      }
-
-      /* -------------------------------------
-          BUTTONS
-      ------------------------------------- */
-      .btn {
-        box-sizing: border-box;
-        width: 100%;
-      }
-      .btn > tbody > tr > td {
-        padding-bottom: 15px;
-      }
-      .btn table {
-        width: auto;
-      }
-      .btn table td {
-        background-color: #ffffff;
-        border-radius: 5px;
-        text-align: center;
-      }
-      .btn a {
-        background-color: #ffffff;
-        border: solid 1px #3498db;
-        border-radius: 5px;
-        box-sizing: border-box;
-        color: #3498db;
-        cursor: pointer;
-        display: inline-block;
-        font-size: 12px;
-        font-weight: bold;
-        margin: 0;
-        padding: 12px 25px;
-        text-decoration: none;
-        text-transform: capitalize;
-      }
-
-      .btn-primary table td {
-        background-color: #3498db;
-      }
-
-      .btn-primary a {
-        background-color: #3498db;
-        border-color: #3498db;
-        color: #ffffff;
-      }
-
-      /* -------------------------------------
-          OTHER STYLES THAT MIGHT BE USEFUL
-      ------------------------------------- */
-      .last {
-        margin-bottom: 0;
-      }
-
-      .first {
-        margin-top: 0;
-      }
-
-      .align-center {
-        text-align: center;
-      }
-
-      .align-right {
-        text-align: right;
-      }
-
-      .align-left {
-        text-align: left;
-      }
-
-      .clear {
-        clear: both;
-      }
-
-      .mt0 {
-        margin-top: 0;
-      }
-
-      .mb0 {
-        margin-bottom: 0;
-      }
-
-      .preheader {
-        color: transparent;
-        display: none;
-        height: 0;
-        max-height: 0;
-        max-width: 0;
-        opacity: 0;
-        overflow: hidden;
-        mso-hide: all;
-        visibility: hidden;
-        width: 0;
-      }
-
-      .powered-by a {
-        text-decoration: none;
-      }
-
-      hr {
-        border: 0;
-        border-bottom: 1px solid #fafafa;
-        margin: 20px 0;
-      }
-
-      /* -------------------------------------
-          RESPONSIVE AND MOBILE FRIENDLY STYLES
-      ------------------------------------- */
-      @media only screen and (max-width: 620px) {
-        table.body h1 {
-          font-size: 28px !important;
-          margin-bottom: 10px !important;
-        }
-        table.body p,
-        table.body ul,
-        table.body ol,
-        table.body td,
-        table.body a {
-          font-size: 12px !important;
-        }
-        table.body .wrapper,
-        table.body .article {
-          padding: 10px 20px !important;
-        }
-        table.body .content {
-          padding: 0px !important;
-        }
-        table.body .container {
-          padding: 0 !important;
-          width: 100% !important;
-        }
-        table.body .main {
-          border-left-width: 0 !important;
-          border-right-width: 0 !important;
-        }
-        table.body .btn table {
-          width: 100% !important;
-        }
-        table.body .btn a {
-          width: 100% !important;
-        }
-        table.body .img-responsive {
-          height: auto !important;
-          max-width: 100% !important;
-          width: auto !important;
-        }
-      }
-
-      /* -------------------------------------
-          PRESERVE THESE STYLES IN THE HEAD
-      ------------------------------------- */
-      @media all {
-        .ExternalClass {
-          width: 100%;
-        }
-        .ExternalClass,
-        .ExternalClass p,
-        .ExternalClass span,
-        .ExternalClass font,
-        .ExternalClass td,
-        .ExternalClass div {
-          line-height: 100%;
-        }
-        .apple-link a {
-          color: inherit !important;
-          font-family: inherit !important;
-          font-size: inherit !important;
-          font-weight: inherit !important;
-          line-height: inherit !important;
-          text-decoration: none !important;
-        }
-        #MessageViewBody a {
-          color: inherit;
-          text-decoration: none;
-          font-size: inherit;
-          font-family: inherit;
-          font-weight: inherit;
-          line-height: inherit;
-        }
-        .btn-primary table td:hover {
-          background-color: #34495e !important;
-        }
-        .btn-primary a:hover {
-          background-color: #34495e !important;
-          border-color: #34495e !important;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <span class="preheader"
-      >This is preheader text. Some clients will show this text as a preview.
-      Change this text before deployement.</span
-    >
-    <tabclearle
-      role="presentation"
-      border="0"
-      cellpadding="0"
-      cellspacing="0"
-      class="body"
-    >
-      <tr>
-        <td>&nbsp;</td>
-        <td class="container">
-          <div class="content">
-            <!-- START CENTERED WHITE CONTAINER -->
-            <table role="presentation" class="main">
-              <!-- START MAIN CONTENT AREA -->
-              <tbody>
-               <!-- Top Area  -->
-               <tr>
-                <td>
-                  <div>
-                    <table
-                      border="0"
-                      cellpadding="0"
-                      cellspacing="0"
-                      style="border-collapse: collapse; width: 100%"
-                    >
-                      <tbody>
-                        <tr>
-                          <td
-                            style="padding: 20px; background: #fafafa"
-                            colspan="3"
-                            rowspan="2"
-                            class="xl66"
-                          >
-                            <div>
-                              <span style="font-size: 1.2em;"><strong>RESERVATION DETAILS</strong></span>
-                            </div>
-                            <span style="font-size: 0.85em; opacity: 0.75"
-                              >CODE: MAX683</span
-                            >
-                          </td>
-                          <td
-                            colspan="2"
-                            rowspan="3"
-                            class="xl68"
-                            style="background: #bfe5ff; width: 90px; max-width: 90px; min-width: 90px"
-                          >
-                            <img
-                              style="
-                                width: 70px;
-                                margin: 0 auto;
-                                display: block;
-                              "
-                              src="https://maxtoria.uniqeurope.com/images/max_logo_x_136x45.png"
-                              alt=""
-                            />
-                          </td>
-                          <td
-                            rowspan="2"
-                            class="xl65"
-                            style="background: #fafafa"
-                          ></td>
-                        </tr>
-                        <tr></tr>
-                        <tr>
-                          <td
-                            colspan="3"
-                            class="xl67"
-                            style="height: 30px"
-                          ></td>
-                          <td
-                            class="xl67"
-                            style="min-width: 20px"
-                          >
-                            &nbsp;
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </td>
-              </tr>
-              
-               <!-- Top Area End -->
-               <!-- Basic Info -->
-              
-              <tr>
-                <td class="wrapper">
-                  <table
-                    role="presentation"
-                    border="0"
-                    cellpadding="0"
-                    cellspacing="0"
-                    style="width: 100%;"
-                  >
-                    <tr>
-                      <td>
-                        <p style="margin-bottom: 0px; opacity: 0.7;">NAME</p>
-                        <h2 style="margin-top: 0; line-height: initial; font-weight: 600; text-transform:uppercase; font-size: 1.3em; margin-bottom: 7px;">
-                          EMRE ŞAHİN
-                        </h2>
-                        <p style="margin-bottom: 0px; opacity: 0.7;">DATE</p>
-                        <h2 style="margin-top: 0; line-height: initial; font-weight: 600; text-transform:uppercase; font-size: 1.3em; margin-bottom: 7px;">
-                          12 MAY 2021
-                        </h2>
-                        <p style="margin-bottom: 0px; opacity: 0.7;">TIME</p>
-                        <h2 style="margin-top: 0; line-height: initial; font-weight: 600; text-transform:uppercase; font-size: 1.3em; margin-bottom: 7px;">
-                          14:00
-                        </h2>                        
-                        <p style="margin-bottom: 0px; opacity: 0.7;">PAX</p>
-                        <h2 style="margin-top: 0; line-height: initial; font-weight: 600; text-transform:uppercase; font-size: 1.3em; margin-bottom: 7px;">
-                          2 + 1
-                        </h2>
-                        </td>
-                        <td style="vertical-align: baseline; text-align: right;">
-                          <img style="width:100px" src="https://upload.wikimedia.org/wikipedia/commons/3/31/MM_QRcode.png" alt="">
-                        </td>
-                        </tr>
-                        </table>
-                        <tr>
-
-                        <td class="wrapper">
 
 
-                        <div style="border: #dadada  2px dashed; border-radius: 5px; background: #fff; padding: 15px;">
 
-                          <table
-                          role="presentation"
-                          border="0"
-                          cellpadding="0"
-                          cellspacing="0"
-                          class="btn btn-primary"
-                        >
-                          <tbody>
+
+        <!--[if gte mso 6]>
+        <style>
+            table.mcnFollowContent{width:100%;}
+            table.mcnShareContent{width:100%;}
+            td.columnsContainer{width:30%;}
+        </style>
+        <![endif]-->
+    
+                    <script>var w=window;if(w.performance||w.mozPerformance||w.msPerformance||w.webkitPerformance){var d=document;AKSB=w.AKSB||{},AKSB.q=AKSB.q||[],AKSB.mark=AKSB.mark||function(e,_){AKSB.q.push(["mark",e,_||(new Date).getTime()])},AKSB.measure=AKSB.measure||function(e,_,t){AKSB.q.push(["measure",e,_,t||(new Date).getTime()])},AKSB.done=AKSB.done||function(e){AKSB.q.push(["done",e])},AKSB.mark("firstbyte",(new Date).getTime()),AKSB.prof={custid:"641075",ustr:"",originlat:"0",clientrtt:"4",ghostip:"2.20.134.213",ipv6:false,pct:"10",clientip:"176.88.108.154",requestid:"21de615b",region:"35508",protocol:"h2",blver:14,akM:"x",akN:"ae",akTT:"O",akTX:"1",akTI:"21de615b",ai:"441803",ra:"false",pmgn:"",pmgi:"",pmp:"",qc:""},function(e){var _=d.createElement("script");_.async="async",_.src=e;var t=d.getElementsByTagName("script"),t=t[t.length-1];t.parentNode.insertBefore(_,t)}(("https:"===d.location.protocol?"https:":"http:")+"//ds-aksb-a.akamaihd.net/aksb.min.js")}</script>
+                    </head>
+    <body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0" style="height: 100%;margin: 0;padding: 0;width: 100%;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;background-color: #9bbfe2;">
+        <!--*|IF:MC_PREVIEW_TEXT|*-->
+        <!--[if !gte mso 9]><!----><span class="mcnPreviewText" style="display:none; font-size:0px; line-height:0px; max-height:0px; max-width:0px; opacity:0; overflow:hidden; visibility:hidden; mso-hide:all;">{{previewtext}}</span><!--<![endif]-->
+        <!--*|END:IF|*-->
+        <center>
+            <table align="center" border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" id="bodyTable" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;height: 100%;margin: 0;padding: 0;width: 100%;background-color: #9bbfe2;">
+                <tr>
+                    <td align="center" valign="top" id="bodyCell" style="mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;height: 100%;margin: 0;padding: 0;width: 100%;border-top: 0;">
+                        <!-- BEGIN TEMPLATE // -->
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
                             <tr>
-                              <td align="left" style="padding-bottom: 0px;">
-                                <img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/24/16/04/6d/caption.jpg?w=300&h=-1&s=1" alt="" style="width: 120px; border-radius: 5px;">
-                              </td>
-                                <td style="padding-left: 10px; padding-bottom: 0px;">
-                                  <span style="font-size: 1.3em; text-transform: uppercase;">Rhodes to Marmaris Full Day Trip by Boat</span>
+                                <td align="center" valign="top" style="mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                    <!-- BEGIN PREHEADER // -->
+                                    <table border="0" cellpadding="0" cellspacing="0" width="100%" id="templatePreheader" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;background-color: #212223;border-top: 0;border-bottom: 0;">
+                                        <tr>
+                                        	<td align="center" valign="top" style="mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                                <table border="0" cellpadding="0" cellspacing="0" width="600" class="templateContainer" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                                    <tr>
+                                                        <td valign="top" class="preheaderContainer" style="padding-top: 10px;padding-bottom: 10px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"><table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnTextBlock" style="min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+    <tbody class="mcnTextBlockOuter">
+        <tr>
+            <td valign="top" class="mcnTextBlockInner" style="padding-top: 9px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+              	<!--[if mso]>
+				<table align="left" border="0" cellspacing="0" cellpadding="0" width="100%" style="width:100%;">
+				<tr>
+				<![endif]-->
+			    
+				<!--[if mso]>
+				<td valign="top" width="600" style="width:600px;">
+				<![endif]-->
+                <table align="left" border="0" cellpadding="0" cellspacing="0" style="max-width: 100%;min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;" width="100%" class="mcnTextContentContainer">
+                    <tbody><tr>
+                        
+                        <td valign="top" class="mcnTextContent" style="padding: 0px 18px 9px;text-align: center;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;word-break: break-word;color: #FFFFFF;font-family: Helvetica;font-size: 10px;line-height: 125%;">
+                        
+                            <a href="*|ARCHIVE|*" target="_blank" style="mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: #FFFFFF;font-weight: normal;text-decoration: underline;">View this email in your browser</a>
+                        </td>
+                    </tr>
+                </tbody></table>
+				<!--[if mso]>
+				</td>
+				<![endif]-->
+                
+				<!--[if mso]>
+				</tr>
+				</table>
+				<![endif]-->
+            </td>
+        </tr>
+    </tbody>
+</table></td>
+                                                    </tr>
+                                                </table>
+                                            </td>                                            
+                                        </tr>
+                                    </table>
+                                    <!-- // END PREHEADER -->
                                 </td>
                             </tr>
-                          </tbody>
-                        </table>                        
-                        </div>
-                        <div style="margin-top:10px; margin-bottom:15px;">
-                          <table
-                          role="presentation"
-                          border="0"
-                          cellpadding="0"
-                          class="btn btn-primary"
-                        >
-                          <tbody>
                             <tr>
-                              <td style="background: #fafafa; border-radius: 5px; padding: 15px;">
-                                <div>
-                                  <p style="margin-bottom:2px; opacity: 0.8;">TOTAL PRICE</p>
-                                  <p style="margin-bottom:0px;"><span style="font-size:1.6em; font-weight:600;">$126.75</span></p>
-                                </div>
-                              </td>
-                              <td style="width:5px;">&nbsp;</td>
-                              <td style="background: #fafafa; border-radius: 5px; padding: 15px;">
-                                <div>
-                                  <p style="margin-bottom:2px; opacity: 0.8;">OPTION</p>
-                                  <p style="margin-bottom:0px;"><span style="font-size:1.6em; font-weight:600;">Default</span></p>
-                                </div>                              
-                              </td>
-                              <td style="width:5px;">&nbsp;</td>
-                              <td style="background: #fafafa; border-radius: 5px; padding: 15px;">
-                                <div>
-                                  <p style="margin-bottom:2px; opacity: 0.8;">PAYMENT</p>
-                                  <p style="margin-bottom:0px;"><span style="font-size:1em; font-weight:600;">Credit Card</span></p>
-                                </div>                              
-                              </td>
-                              </tr>
-                              </tbody>
-                            </table>                     
-                        </div>
-
-
+                                <td align="center" valign="top" style="mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                    <!-- BEGIN HEADER // -->
+                                    <table border="0" cellpadding="0" cellspacing="0" width="100%" id="templateHeader" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;background-color: #9bbfe2;border-top: 0;border-bottom: 0;">
+                                        <tr>
+                                            <td align="center" valign="top" style="mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                                <table border="0" cellpadding="0" cellspacing="0" width="600" class="templateContainer" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                                    <tr>
+                                                        <td valign="top" class="headerContainer" style="padding-top: 10px;padding-bottom: 10px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"><table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnImageBlock" style="min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+    <tbody class="mcnImageBlockOuter">
+            <tr>
+                <td valign="top" style="padding: 9px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;" class="mcnImageBlockInner">
+                    <table align="left" width="100%" border="0" cellpadding="0" cellspacing="0" class="mcnImageContentContainer" style="min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                        <tbody><tr>
+                            <td class="mcnImageContent" valign="top" style="padding-right: 9px;padding-left: 9px;padding-top: 0;padding-bottom: 0;text-align: center;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                
+                                    
+                                        <img align="center" alt="" src="https://maxtoria.uniqeurope.com/images/max_logo_x_136x45.png" width="114" style="max-width: 114px;padding-bottom: 0;display: inline !important;vertical-align: bottom;border: 0;height: auto;outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;" class="mcnImage">
+                                    
+                                
+                            </td>
+                        </tr>
+                    </tbody></table>
+                </td>
+            </tr>
+    </tbody>
+</table></td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <!-- // END HEADER -->
+                                </td>
+                            </tr>
+                            <tr>
+                            	<td align="center" valign="top" style="mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                	<table border="0" cellpadding="0" cellspacing="0" width="100%" id="templateBody" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;background-color: #9bbfe2;border-top: 15px none #ffd249;border-bottom: 0;">
+                                    	<tr>
+                                        	<td align="center" valign="top" style="padding-top: 10px;padding-bottom: 10px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                                <table border="0" cellpadding="0" cellspacing="0" width="600" class="templateContainer" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                                	<tr>
+                                                    	<td align="center" valign="top" style="mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                                        	<table border="0" cellpadding="0" cellspacing="0" width="100%" id="bodyBackground" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;background-color: #FFFFFF;">
+                                                            <tr>
+                                                              <td align="center" valign="top" class="backgroundColor" style="mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;background-color: #9bbfe2;">
+                                                                  <img src="https://maxtoria.uniqeurope.com/images/ticketstart.png" height="10" width="600" class="mcnImage" style="display: block;max-width: 600px;border: 0;height: auto;outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;vertical-align: bottom;">
+                                                                </td>
+                                                            </tr>    
+                                                            <tr style="border-bottom: dotted 10px #9bbfe2;">
+                                                                    <td align="center" valign="top" style="mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                                                        <!-- BEGIN COLUMNS // -->
+                                                                        <table border="0" cellpadding="0" cellspacing="0" width="100%" id="templateColumns" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;background-color: #ffffff;border-top: 15px solid #ffffff;border-bottom: 0;">
+                                                                            <tr>
+                                                                                <td align="left" valign="top" class="columnsContainer" width="50%" style="padding-top: 9px;padding-bottom: 9px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                                                                    <table border="0" cellpadding="0" cellspacing="0" width="100%" class="templateColumn" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                                                                        <tr>
+                                                                                            <td valign="top" class="leftColumnContainer" style="mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"><table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnTextBlock" style="min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+    <tbody class="mcnTextBlockOuter">
+        <tr>
+            <td valign="top" class="mcnTextBlockInner" style="padding-top: 9px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+              	<!--[if mso]>
+				<table align="left" border="0" cellspacing="0" cellpadding="0" width="100%" style="width:100%;">
+				<tr>
+				<![endif]-->
+			    
+				<!--[if mso]>
+				<td valign="top" width="300" style="width:300px;">
+				<![endif]-->
+                <table align="left" border="0" cellpadding="0" cellspacing="0" style="max-width: 100%;min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;" width="100%" class="mcnTextContentContainer">
+                    <tbody><tr>
                         
+                        <td valign="top" class="mcnTextContent" style="padding: 0px 18px 9px;color: #FFD249;font-family: Arial, &quot;Helvetica Neue&quot;, Helvetica, sans-serif;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;word-break: break-word;font-size: 16px;line-height: 150%;text-align: left;">
+                        
+                            <div style="padding-left:20px;">
+<h2 style="display: block;margin: 0;padding: 0;font-family: Georgia;font-size: 26px;font-style: normal;font-weight: normal;line-height: 125%;letter-spacing: -.75px;text-align: left;color: #212223 !important;">RESERVATION DETAILS</h2>
+<span style="color:#808080">CODE: {{code}}</span></div>
+
+                        </td>
+                    </tr>
+                </tbody></table>
+				<!--[if mso]>
+				</td>
+				<![endif]-->
+                
+				<!--[if mso]>
+				</tr>
+				</table>
+				<![endif]-->
+            </td>
+        </tr>
+    </tbody>
+</table><table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnTextBlock" style="min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+    <tbody class="mcnTextBlockOuter">
+        <tr>
+            <td valign="top" class="mcnTextBlockInner" style="padding-top: 9px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+              	<!--[if mso]>
+				<table align="left" border="0" cellspacing="0" cellpadding="0" width="100%" style="width:100%;">
+				<tr>
+				<![endif]-->
+			    
+				<!--[if mso]>
+				<td valign="top" width="300" style="width:300px;">
+				<![endif]-->
+                <table align="left" border="0" cellpadding="0" cellspacing="0" style="max-width: 100%;min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;" width="100%" class="mcnTextContentContainer">
+                    <tbody><tr>
+                        
+                        <td valign="top" class="mcnTextContent" style="padding: 0px 18px 9px;font-family: Arial, &quot;Helvetica Neue&quot;, Helvetica, sans-serif;line-height: 125%;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;word-break: break-word;color: #212223;font-size: 16px;text-align: left;">
+                        
+                            <div style="padding:20px;"><span style="color:#696969"><span style="font-size:12px">NAME</span>:</span><br>
+<span style="font-size:18px">{{name}}</span>
+
+<hr style="border:#e0e0e0 dashed 1px;"> <span style="color:#696969"><span style="font-size:12px">DATE</span>:</span><br>
+<span style="font-size:18px">{{day}} {{month}} {{year}}</span>
+
+<hr style="border:#e0e0e0 dashed 1px;"> <span style="color:#696969"><span style="font-size:12px">TIME</span>:</span><br>
+<span style="font-size:18px">{{time}}</span>
+
+<hr style="border:#e0e0e0 dashed 1px;"> <span style="color:#696969"><span style="font-size:12px">PAX</span>:</span><br>
+<span style="font-size:18px">{{pax}}</span>
+
+<hr style="border:#e0e0e0 dashed 1px;"></div>
+
+                        </td>
+                    </tr>
+                </tbody></table>
+				<!--[if mso]>
+				</td>
+				<![endif]-->
+                
+				<!--[if mso]>
+				</tr>
+				</table>
+				<![endif]-->
+            </td>
+        </tr>
+    </tbody>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnDividerBlock" style="min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;table-layout: fixed !important;">
+    <tbody class="mcnDividerBlockOuter">
+        <tr>
+            <td class="mcnDividerBlockInner" style="min-width: 100%;padding: 18px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                
+<!--            
+                <td class="mcnDividerBlockInner" style="padding: 18px;">
+                <hr class="mcnDividerContent" style="border-bottom-color:none; border-left-color:none; border-right-color:none; border-bottom-width:0; border-left-width:0; border-right-width:0; margin-top:0; margin-right:0; margin-bottom:0; margin-left:0;" />
+-->
+            </td>
+        </tr>
+    </tbody>
+</table>
+</td>
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                </td>
+                                                                                <td align="left" valign="top" class="columnsContainer" width="50%" style="padding-top: 9px;padding-bottom: 9px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                                                                    <table border="0" cellpadding="0" cellspacing="0" width="100%" class="templateColumn" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                                                                        <tr>
+                                                                                            <td valign="top" class="rightColumnContainer" style="mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"><table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnTextBlock" style="min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+    <tbody class="mcnTextBlockOuter">
+        <tr>
+            <td valign="top" class="mcnTextBlockInner" style="padding-top: 9px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+              	<!--[if mso]>
+				<table align="left" border="0" cellspacing="0" cellpadding="0" width="100%" style="width:100%;">
+				<tr>
+				<![endif]-->
+			    
+				<!--[if mso]>
+				<td valign="top" width="300" style="width:300px;">
+				<![endif]-->
+                <table align="left" border="0" cellpadding="0" cellspacing="0" style="max-width: 100%;min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;" width="100%" class="mcnTextContentContainer">
+                    <tbody><tr>
+                        
+                        <td valign="top" class="mcnTextContent" style="padding: 0px 18px 9px;text-align: justify;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;word-break: break-word;color: #212223;font-family: Helvetica;font-size: 16px;line-height: 150%;">
+                        
+                            <div style="padding-right:20px">
+<h1 style="text-align: right;font-size: 52px;display: block;margin: 0;padding: 0;font-family: Georgia, Times, 'Times New Roman', serif;font-style: normal;font-weight: normal;line-height: 125%;letter-spacing: -1px;color: #212223 !important;">{{day}}</h1>
+
+<h2 style="text-align: right;display: block;margin: 0;padding: 0;font-family: Georgia;font-size: 26px;font-style: normal;font-weight: normal;line-height: 125%;letter-spacing: -.75px;color: #212223 !important;">{{month}}</h2>
+</div>
+
+                        </td>
+                    </tr>
+                </tbody></table>
+				<!--[if mso]>
+				</td>
+				<![endif]-->
+                
+				<!--[if mso]>
+				</tr>
+				</table>
+				<![endif]-->
+            </td>
+        </tr>
+    </tbody>
+</table><table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnImageBlock" style="min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+    <tbody class="mcnImageBlockOuter">
+            <tr>
+                <td valign="top" style="padding: 9px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;" class="mcnImageBlockInner">
+                    <table align="left" width="100%" border="0" cellpadding="0" cellspacing="0" class="mcnImageContentContainer" style="min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                        <tbody><tr>
+                            <td class="mcnImageContent" valign="top" style="padding-right: 9px;padding-left: 9px;padding-top: 0;padding-bottom: 0;text-align: center;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                
+                                    
+                                        <img align="center" alt="" src={{qrcode}} width="264" style="max-width: 321px;padding-bottom: 0;display: inline !important;vertical-align: bottom;border: 0;height: auto;outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;" class="mcnImage">
+                                    
+                                
+                            </td>
+                        </tr>
+                    </tbody></table>
+                </td>
+            </tr>
+    </tbody>
+</table></td>
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                        <!-- // END COLUMNS -->
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td align="center" valign="top" style="mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                                                        <!-- BEGIN BODY // -->
+                                                                        <table border="0" cellpadding="0" cellspacing="0" width="100%" id="" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                                                            <tr>
+                                                                                <td valign="top" class="bodyContainer" style="padding-top: 10px;padding-bottom: 10px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"><table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnDividerBlock" style="min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;table-layout: fixed !important;">
+    <tbody class="mcnDividerBlockOuter">
+        <tr>
+            <td class="mcnDividerBlockInner" style="min-width: 100%;padding: 18px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                <table class="mcnDividerContent" border="0" cellpadding="0" cellspacing="0" width="100%" style="min-width: 100%;border-top: 2px solid #FFFFFF;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                    <tbody><tr>
+                        <td style="mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                            <span></span>
+                        </td>
+                    </tr>
+                </tbody></table>
+<!--            
+                <td class="mcnDividerBlockInner" style="padding: 18px;">
+                <hr class="mcnDividerContent" style="border-bottom-color:none; border-left-color:none; border-right-color:none; border-bottom-width:0; border-left-width:0; border-right-width:0; margin-top:0; margin-right:0; margin-bottom:0; margin-left:0;" />
+-->
+            </td>
+        </tr>
+    </tbody>
+</table><table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnTextBlock" style="min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+    <tbody class="mcnTextBlockOuter">
+        <tr>
+            <td valign="top" class="mcnTextBlockInner" style="padding-top: 9px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+              	<!--[if mso]>
+				<table align="left" border="0" cellspacing="0" cellpadding="0" width="100%" style="width:100%;">
+				<tr>
+				<![endif]-->
+			    
+				<!--[if mso]>
+				<td valign="top" width="300" style="width:300px;">
+				<![endif]-->
+                <table align="left" border="0" cellpadding="0" cellspacing="0" style="max-width: 300px;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;" width="100%" class="mcnTextContentContainer">
+                    <tbody><tr>
+                        
+                        <td valign="top" class="mcnTextContent" style="padding-top: 0;padding-left: 18px;padding-bottom: 9px;padding-right: 18px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;word-break: break-word;color: #212223;font-family: Helvetica;font-size: 16px;line-height: 150%;text-align: left;">
+                        
+                            <div style="background-color: #EEEEEE;border-radius: 5px;padding: 10px;text-align: center;"><span style="color:#696969"><span style="font-size:12px">TOTAL PRICE</span></span>
+
+<h2 style="text-align: center;display: block;margin: 0;padding: 0;font-family: Georgia;font-size: 26px;font-style: normal;font-weight: normal;line-height: 125%;letter-spacing: -.75px;color: #212223 !important;">{{totalprice}}</h2>
+</div>
+
+                        </td>
+                    </tr>
+                </tbody></table>
+				<!--[if mso]>
+				</td>
+				<![endif]-->
+                
+				<!--[if mso]>
+				<td valign="top" width="300" style="width:300px;">
+				<![endif]-->
+                <table align="left" border="0" cellpadding="0" cellspacing="0" style="max-width: 300px;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;" width="100%" class="mcnTextContentContainer">
+                    <tbody><tr>
+                        
+                        <td valign="top" class="mcnTextContent" style="padding-top: 0;padding-left: 18px;padding-bottom: 9px;padding-right: 18px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;word-break: break-word;color: #212223;font-family: Helvetica;font-size: 16px;line-height: 150%;text-align: left;">
+                        
+                            <div style="background-color: #EEEEEE;border-radius: 5px;padding: 10px;text-align: center;"><span style="color:#696969"><span style="font-size:12px">PAYMENT TYPE</span></span>
+
+<h2 style="text-align: center;display: block;margin: 0;padding: 0;font-family: Georgia;font-size: 26px;font-style: normal;font-weight: normal;line-height: 125%;letter-spacing: -.75px;color: #212223 !important;">{{paymentTypeText}}</h2>
+</div>
+
+       
+                        </td>
+                    </tr>
+                </tbody></table>
+                {{#if paymentTypeIsCash}}
+                <table style="width:100%">
+                  <tbody>
+                    <tr>
+                      <td>
+                        <div style="background: #e91e65; text-align: center; margin-left: 20px; margin-right: 20px;
+                        margin-top: 10px;
+                        padding: 10px;
+                        border-radius: 5px;
+                        text-transform: uppercase;
+                        color: #fff;
+                        font-size: .8em;
+                        font-family: sans-serif;"><span style="font-size: 1.8em;
+    border: solid 2px;
+    display: inline;
+    padding: 0px 8px;
+    border-radius: 50%;
+    margin-right: 10px;
+    background: #fff;
+    text-transform: lowercase;
+    color: #e81e65;
+    font-family: serif;
+    font-weight: 900;">i</span> Payment shall be collected on the date of the activity.</div>
                       </td>
                     </tr>
-                  </table>
-                  <table role="presentation" class="main" style="background: #fafafa; min-height: 220px;">
-                    <tbody>
-                      <tr>
-                        <td style="padding: 20px 10px 20px 30px;">
-                          <div>
-                            <p style="margin-bottom: 0; opacity: .75;">PICKUP TIME</p>
-                            <p style="margin-bottom:8px;"><strong> 11:00 AM</strong></p>
-                            <p style="margin-bottom: 0; opacity: .75;">PICKUP POINT</p>
-                            <p style="margin-bottom:8px;"><strong>İÇMELER / MARMARİS</strong></p>
-                            <p style="margin-bottom: 0; opacity: .75;">HOTEL</p>
-                            <p style="margin-bottom:0px;"><strong>HILTON / 12</strong></p>
-                          </div>
+                  </tbody>
+                </table>
+         {{/if}}
+				<!--[if mso]>
+				</td>
+				<![endif]-->
+                
+				<!--[if mso]>
+				</tr>
+				</table>
+				<![endif]-->
+            </td>
+        </tr>
+    </tbody>
+</table><table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnDividerBlock" style="min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;table-layout: fixed !important;">
+    <tbody class="mcnDividerBlockOuter">
+        <tr>
+            <td class="mcnDividerBlockInner" style="min-width: 100%;padding: 18px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                <table class="mcnDividerContent" border="0" cellpadding="0" cellspacing="0" width="100%" style="min-width: 100%;border-top: 2px dashed #EAEAEA;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                    <tbody><tr>
+                        <td style="mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                            <span></span>
                         </td>
-                        <td style="padding: 20px; background: #bfe5ff; text-align: center;">
-                          <div><span style="font-size: 2em;"> MAY</span></div>
-                          <span style="font-size: 3em;"><strong>23</strong></span>
-                        </td>
-                        <td style="padding: 20px 10px 20px 10px;">
-                          <div>
-                            <p style="margin-bottom: 0; opacity: .75;">STATUS</p>
-                            <p style="margin-bottom:8px;"><strong>CONFIRMED</strong></p>
-                            <p style="margin-bottom: 0; opacity: .75;">EXTRAS</p>
-                            <p style="margin-bottom:0px;">Drink: <strong>2</strong></p>
-                            <p style="margin-bottom:8px;">Hamburger: <strong>4</strong></p>
-                          </div>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </td>
-              </tr>
-              <!-- Basic Info End -->
+                    </tr>
+                </tbody></table>
+<!--            
+                <td class="mcnDividerBlockInner" style="padding: 18px;">
+                <hr class="mcnDividerContent" style="border-bottom-color:none; border-left-color:none; border-right-color:none; border-bottom-width:0; border-left-width:0; border-right-width:0; margin-top:0; margin-right:0; margin-bottom:0; margin-left:0;" />
+-->
+            </td>
+        </tr>
+    </tbody>
+</table><table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnCaptionBlock" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+    <tbody class="mcnCaptionBlockOuter">
+        <tr>
+            <td class="mcnCaptionBlockInner" valign="top" style="padding: 9px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                
 
-              </tbody>
-              <!-- END MAIN CONTENT AREA -->
-            </table>
-            <!-- END CENTERED WHITE CONTAINER -->
-            
 
-            <!-- START FOOTER -->
-            <div class="footer">
-              <table
-                role="presentation"
-                border="0"
-                cellpadding="0"
-                cellspacing="0"
-              >
-                <tr>
-                  <td class="content-block">
-                    <span class="apple-link"
-                      >Company Inc, 3 Abbey Road, San Francisco CA 94102</span
-                    >
-                    <br />
-                    Don't like these emails?
-                    <a href="http://i.imgur.com/CScmqnj.gif">Unsubscribe</a>.
-                  </td>
+
+<table border="0" cellpadding="0" cellspacing="0" class="mcnCaptionRightContentOuter" width="100%" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+    <tbody><tr>
+        <td valign="top" class="mcnCaptionRightContentInner" style="padding: 0 9px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+            <table align="left" border="0" cellpadding="0" cellspacing="0" class="mcnCaptionRightImageContentContainer" width="132" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                <tbody><tr>
+                    <td class="mcnCaptionRightImageContent" align="center" valign="top" style="mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                    
+                        
+
+                        <img alt="" src={{operatorimage}} width="132" style="border-radius: 5px; max-width: 400px;border: 0;height: auto;outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;vertical-align: bottom;" class="mcnImage">
+                        
+
+                    
+                    </td>
                 </tr>
-                <tr>
-                  <td class="content-block powered-by">
-                    Powered by <a href="http://htmlemail.io">HTMLemail</a>.
-                  </td>
+            </tbody></table>
+            <table class="mcnCaptionRightTextContentContainer" align="right" border="0" cellpadding="0" cellspacing="0" width="396" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                <tbody><tr>
+                    <td valign="top" class="mcnTextContent" style="mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;word-break: break-word;color: #212223;font-family: Helvetica;font-size: 16px;line-height: 150%;text-align: left;">
+                        <h2 class="null" style="display: block;margin: 0;padding: 0;font-family: Georgia;font-size: 26px;font-style: normal;font-weight: normal;line-height: 125%;letter-spacing: -.75px;text-align: left;color: #212223 !important;">{{operatorname}}</h2>
+<br>
+<span style="color:#808080">{{operatorcategory}}, {{operatoraddress}} </span><span style="color:#808080"> by</span>: <strong><span style="color:#ADD8E6">{{operatorsupplier}}</span></strong>
+                    </td>
                 </tr>
-              </table>
-            </div>
-            <!-- END FOOTER -->
-
-
-
-
-            
-          </div>
+            </tbody></table>
         </td>
-        <td>&nbsp;</td>
-      </tr>
-    </table>
-  </body>
+    </tr>
+</tbody></table>
+
+
+
+
+            </td>
+        </tr>
+    </tbody>
+</table><table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnDividerBlock" style="min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;table-layout: fixed !important;">
+    <tbody class="mcnDividerBlockOuter">
+        <tr>
+            <td class="mcnDividerBlockInner" style="min-width: 100%;padding: 18px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                <table class="mcnDividerContent" border="0" cellpadding="0" cellspacing="0" width="100%" style="min-width: 100%;border-top: 2px dashed #EAEAEA;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                    <tbody><tr>
+                        <td style="mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                            <span></span>
+                        </td>
+                    </tr>
+                </tbody></table>
+<!--            
+                <td class="mcnDividerBlockInner" style="padding: 18px;">
+                <hr class="mcnDividerContent" style="border-bottom-color:none; border-left-color:none; border-right-color:none; border-bottom-width:0; border-left-width:0; border-right-width:0; margin-top:0; margin-right:0; margin-bottom:0; margin-left:0;" />
+-->
+            </td>
+        </tr>
+    </tbody>
+</table><table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnTextBlock" style="min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+    <tbody class="mcnTextBlockOuter">
+        <tr>
+            <td valign="top" class="mcnTextBlockInner" style="padding-top: 9px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+              	<!--[if mso]>
+				<table align="left" border="0" cellspacing="0" cellpadding="0" width="100%" style="width:100%;">
+				<tr>
+				<![endif]-->
+			    
+				<!--[if mso]>
+				<td valign="top" width="300" style="width:300px;">
+				<![endif]-->
+                <table align="left" border="0" cellpadding="0" cellspacing="0" style="max-width: 300px;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;" width="100%" class="mcnTextContentContainer">
+                    <tbody><tr>
+                        
+                        <td valign="top" class="mcnTextContent" style="padding-top: 0;padding-left: 18px;padding-bottom: 9px;padding-right: 18px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;word-break: break-word;color: #212223;font-family: Helvetica;font-size: 16px;line-height: 150%;text-align: left;">
+                        
+                            <div style="border: dashed 2px #eeeeee; border-radius: 5px; padding: 15px; min-height:250px">
+<div style="text-align: center;"><span style="font-size:15px"><strong>OPTIONS &amp; EXTRAS</strong></span></div>
+<br style="border:#e0e0e0 dashed 1px;">
+<span style="color: #696969;font-size: 12px;">OPTION</span><font color="#696969">:</font><br>
+<span style="font-size:15px"><span style="color:#000000">{{option}}</span></span><br>
+<br>
+<span style="color: #696969;font-size: 12px;">EXTRAS</span><font color="#696969">:</font><br>
+<font color="#000000"><span style="font-size:15px">{{extras}}</span></font><br>
+<br>
+&nbsp;</div>
+
+                        </td>
+                    </tr>
+                </tbody></table>
+				<!--[if mso]>
+				</td>
+				<![endif]-->
+                
+				<!--[if mso]>
+				<td valign="top" width="300" style="width:300px;">
+				<![endif]-->
+                <table align="left" border="0" cellpadding="0" cellspacing="0" style="max-width: 300px;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;" width="100%" class="mcnTextContentContainer">
+                    <tbody><tr>
+                        
+                        <td valign="top" class="mcnTextContent" style="padding-top: 0;padding-left: 18px;padding-bottom: 9px;padding-right: 18px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;word-break: break-word;color: #212223;font-family: Helvetica;font-size: 16px;line-height: 150%;text-align: left;">
+                        
+                            <div style="border: dashed 2px #eeeeee; border-radius: 5px; padding: 15px; min-height:250px">
+<div style="text-align: center;"><span style="font-size:15px"><strong>PICKUP DETAILS</strong></span></div>
+<br style="border:#e0e0e0 dashed 1px;">
+<span style="color: #696969;font-size: 12px;">PICKUP TIME</span><font color="#696969">:</font><br>
+<span style="font-size:15px"><span style="color:#000000">{{pickuptime}}</span></span><br>
+<br>
+<span style="color: #696969;font-size: 12px;">HOTEL / ROOM NO</span><font color="#696969">:</font><br>
+<span style="font-size:15px"><span style="color:#000000">{{hotel}} #{{roomno}}</span></span><br>
+<br>
+&nbsp;</div>
+
+                        </td>
+                    </tr>
+                </tbody></table>
+				<!--[if mso]>
+				</td>
+				<![endif]-->
+                
+				<!--[if mso]>
+				</tr>
+				</table>
+				<![endif]-->
+            </td>
+        </tr>
+    </tbody>
+</table><table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnTextBlock" style="min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+    <tbody class="mcnTextBlockOuter">
+        <tr>
+            <td valign="top" class="mcnTextBlockInner" style="padding-top: 9px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+              	<!--[if mso]>
+				<table align="left" border="0" cellspacing="0" cellpadding="0" width="100%" style="width:100%;">
+				<tr>
+				<![endif]-->
+			    
+				<!--[if mso]>
+				<td valign="top" width="210" style="width:210px;">
+				<![endif]-->
+                <table align="left" border="0" cellpadding="0" cellspacing="0" style="max-width: 210px;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;" width="100%" class="mcnTextContentContainer">
+                    <tbody><tr>
+                        
+                        <td valign="top" class="mcnTextContent" style="padding-top: 0;padding-left: 18px;padding-bottom: 9px;padding-right: 18px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;word-break: break-word;color: #212223;font-family: Helvetica;font-size: 16px;line-height: 150%;text-align: left;">
+                        
+                            
+                        </td>
+                    </tr>
+                </tbody></table>
+				<!--[if mso]>
+				</td>
+				<![endif]-->
+                
+				<!--[if mso]>
+				<td valign="top" width="390" style="width:390px;">
+				<![endif]-->
+                <table align="left" border="0" cellpadding="0" cellspacing="0" style="max-width: 390px;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;" width="100%" class="mcnTextContentContainer">
+                    <tbody><tr>
+                        
+                        <td valign="top" class="mcnTextContent" style="padding-top: 0;padding-left: 18px;padding-bottom: 9px;padding-right: 18px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;word-break: break-word;color: #212223;font-family: Helvetica;font-size: 16px;line-height: 150%;text-align: left;">
+                        
+                            
+                        </td>
+                    </tr>
+                </tbody></table>
+				<!--[if mso]>
+				</td>
+				<![endif]-->
+                
+				<!--[if mso]>
+				</tr>
+				</table>
+				<![endif]-->
+            </td>
+        </tr>
+    </tbody>
+</table></td>
+                                                                            </tr>
+                                                                        </table>
+                                                                        <!-- // END BODY -->
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                	<td align="center" valign="top" class="backgroundColor" style="mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;background-color: #9bbfe2;">
+                                                                    	<img src="https://maxtoria.uniqeurope.com/images/ticketend.png" height="10" width="600" class="mcnImage" style="display: block;max-width: 600px;border: 0;height: auto;outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;vertical-align: bottom;">
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                        	</td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center" valign="top" style="padding-bottom: 40px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                    <!-- BEGIN FOOTER // -->
+                                    <table border="0" cellpadding="0" cellspacing="0" width="100%" id="templateFooter" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;background-color: #9bbfe2;border-top: 0;border-bottom: 0;">
+                                        <tr>
+                                            <td align="center" valign="top" style="mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                                <table border="0" cellpadding="0" cellspacing="0" width="600" class="templateContainer" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                                    <tr>
+                                                        <td valign="top" class="footerContainer" style="padding-top: 10px;padding-bottom: 10px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"><table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnTextBlock" style="min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+    <tbody class="mcnTextBlockOuter">
+        <tr>
+            <td valign="top" class="mcnTextBlockInner" style="padding-top: 9px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+              	<!--[if mso]>
+				<table align="left" border="0" cellspacing="0" cellpadding="0" width="100%" style="width:100%;">
+				<tr>
+				<![endif]-->
+			    
+				<!--[if mso]>
+				<td valign="top" width="600" style="width:600px;">
+				<![endif]-->
+                <table align="left" border="0" cellpadding="0" cellspacing="0" style="max-width: 100%;min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;" width="100%" class="mcnTextContentContainer">
+                    <tbody><tr>
+                        
+                        <td valign="top" class="mcnTextContent" style="padding-top: 0;padding-right: 18px;padding-bottom: 9px;padding-left: 18px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;word-break: break-word;color: #212223;font-family: Helvetica;font-size: 10px;line-height: 125%;text-align: center;">
+                            <p>If you believe that this email was sent to you in error, please kindly inform us, and we apologize for any inconvenience this may have caused.</p>
+                            <em>Copyright © 2023 MAXTORIA INC, All rights reserved.</em><br>
+                        </td>
+                    </tr>
+                </tbody></table>
+				<!--[if mso]>
+				</td>
+				<![endif]-->
+                
+				<!--[if mso]>
+				</tr>
+				</table>
+				<![endif]-->
+            </td>
+        </tr>
+    </tbody>
+</table></td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <!-- // END FOOTER -->
+                                </td>
+                            </tr>
+                        </table>
+                        <!-- // END TEMPLATE -->
+                    </td>
+                </tr>
+            </table>
+        </center>
 </html>
